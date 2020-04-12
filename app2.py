@@ -1,4 +1,4 @@
-import threading
+import concurrent.futures
 import time
 
 start = time.perf_counter() #start timer
@@ -6,8 +6,13 @@ start = time.perf_counter() #start timer
 def doSomething(seconds):
     print(f'Sleeping {seconds} second(s)...')
     time.sleep(seconds)
-    print('done sleeping..')
+    return 'done sleeping..'
 
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    f1 = executor.submit(doSomething, 1)
+    print(f1.result())
+'''
+# old way of threading
 threads = []
 
 for _ in range(10):
@@ -17,7 +22,7 @@ for _ in range(10):
 
 for thread in threads:
     thread.join()
-
+'''
 finish = time.perf_counter()
 
 print(f'Finished in {round(finish-start,2)} second(s)')

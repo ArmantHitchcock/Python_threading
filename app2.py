@@ -9,8 +9,9 @@ def doSomething(seconds):
     return 'done sleeping..'
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
-    f1 = executor.submit(doSomething, 1)
-    print(f1.result())
+    results = [executor.submit(doSomething, 1) for _ in range(10)]
+    for f in concurrent.futures.as_completed(results):
+        print(f.result())
 '''
 # old way of threading
 threads = []

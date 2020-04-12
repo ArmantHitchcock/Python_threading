@@ -3,15 +3,15 @@ import time
 
 start = time.perf_counter() #start timer
 
-def doSomething():
-    print('Sleeping 1 second...')
-    time.sleep(1)
+def doSomething(seconds):
+    print(f'Sleeping {seconds} second(s)...')
+    time.sleep(seconds)
     print('done sleeping..')
 
 threads = []
 
 for _ in range(10):
-    t = threading.Thread(target=doSomething)
+    t = threading.Thread(target=doSomething, args=[1.5])
     t.start()
     threads.append(t)
 
